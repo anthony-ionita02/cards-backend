@@ -58,6 +58,14 @@ jobs:
       # Copy only what the API needs to run. --delete removes files you've
       # deleted from the repository; excluded paths are never touched, so the
       # server's own .env and node_modules stay put.
+
+
+      - name: Test SSH authentication
+        if: github.event_name == 'push' && env.SSH_HOST != ''
+        run: |
+          ssh -vvv -o BatchMode=yes -o IdentitiesOnly=yes \
+            -i ~/.ssh/deploy_key \
+            "$SSH_USER@$SSH_HOST" "echo SSH authentication successful"
       - name: Copy the API code to the droplet
         if: github.event_name == 'push' && env.SSH_HOST != ''
         run: >
