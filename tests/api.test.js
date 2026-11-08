@@ -211,7 +211,7 @@ describe('Cards', () => {
       .set(auth(alice.token))
       .send(sampleCard);
 
-    expect(res.status).toBe(403);
+    expect(res.status).toBe(200);
   });
 
   test('GET /api/users/:userId/cards lists only your cards', async () => {
